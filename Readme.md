@@ -8,7 +8,7 @@ An OpenVR driver that allows to create virtual controllers, emulate controller i
 
 The OpenVR driver hooks into the HTC Vive lighthouse driver and allows to modify any pose updates or button/axis events coming from the Vive controllers before they reach the OpenVR runtime. Due to the nature of this hack the driver may break when Valve decides to update the driver-side OpenVR API.
 
-The motivation of this driver is that I want to make myself a tracked gun that is guaranteed to work in any SteamVR game regardless of whether the original dev wants to support tracked guns or not. To accomplish this I need some way to add translation and rotation offsets to the poses of the motion controllers so that I can line up my tracked gun and the gun in the game. Additionally I need a way to easily switch between the tracking puck on my gun and my motion controller with the game thinking it's still the same controller (Throwing grenades with a tracked gun is not fun). But this driver should also support other use cases. 
+The motivation of this driver is that I want to make myself a tracked gun that is guaranteed to work in any SteamVR game regardless of whether the original dev wants to support tracked guns or not. To accomplish this I need some way to add translation and rotation offsets to the poses of the motion controllers so that I can line up my tracked gun and the gun in the game. Additionally I need a way to easily switch between the tracking puck on my gun and my motion controller with the game thinking it's still the same controller (Throwing grenades with a tracked gun is not fun). But this driver should also support other use cases.
 
 There is also a client-side API which other programs can use to communicate with the driver. This API should be powerful enough to also support the development of full-fledged motion-controller drivers.
 
@@ -42,7 +42,7 @@ Download the newest command-line client from the [release section](https://githu
 
 ## Fallout 4 VR specific Fixes
 
-There is an Oculus Touch specific fix available for Fallout 4 VR. It allows to emulate trackpad behaviour with the Rift's joysticks. Therefore, on the [input remapping pages](https://github.com/matzman666/OpenVR-InputEmulator#analog-input-settings) of each analog axis a touchpad emulation mode can be configured. 
+There is an Oculus Touch specific fix available for Fallout 4 VR. It allows to emulate trackpad behaviour with the Rift's joysticks. Therefore, on the [input remapping pages](https://github.com/matzman666/OpenVR-InputEmulator#analog-input-settings) of each analog axis a touchpad emulation mode can be configured.
 
 Currently there are two modes available:
 
@@ -99,8 +99,8 @@ Redirect mode can be temporarily suspended by re-mapping a controller button to 
 - **Linear Approximation w/ Moving Average (Experimental)**: Uses linear approximation to estimate the velocity/acceleration values. The used formula is: (current_position - last_position) / time_difference. To reduce jitter the average over the last few values is used.
   - **Moving Average Window**: How many values are used for calculating the average.
 - **Kalman Filter (Experimental)**: The position values are fed into a kalman filter which then outputs a velocity value. The kalman filter implementation is based on the filter described [here](https://en.wikipedia.org/wiki/Kalman_filter#Example_application.2C_technical).
-  - **Process/Observation Noise**: Parameters used to fine-tune the kalman filter. 
-  
+  - **Process/Observation Noise**: Parameters used to fine-tune the kalman filter.
+
 ## Input Remapping Page:
 
 ![Input Remapping Page](docs/screenshots/InputRemappingPage.png)
@@ -346,13 +346,18 @@ client_commandline.exe setdeviceposition 0 -1 -1 -1
 1. Goto https://sourceforge.net/projects/boost/files/boost-binaries/1.63.0/
 1. Download Boost 1.63 Binaries (boost_1_63_0-msvc-14.0-64.exe)
 1. Install Boost into `OpenVR-InputEmulator/third-party/boost_1_63_0`
-  
+
 ### Qt
 1. Goto https://download.qt.io/official_releases/qt/5.7/5.7.0/
 1. Download Qt 5.7.0
 1. Run the Qt installer (I installed it to "c:\Qt")
 1. Goto `OpenVR-InputEmulator\client_overlay`
 1. Create `client_overlay.vcxproj.user` and paste the following into it:
+
+### OpenVR API
+1. Download the latest version from https://github.com/ValveSoftware/openvr
+1. Create a new directory `openvr` in `OpenVR-InputEmulator`
+1. Extract the downloaded files to `openvr`
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
