@@ -1,8 +1,11 @@
+#define BOOST_PYTHON_STATIC_LIB
 #include "client_commandline.h"
 #include <iostream>
 #include <openvr.h>
 #include <vrinputemulator.h>
 #include <openvr_math.h>
+#include <boost/python.hpp>
+
 
 
 void listDevices(int argc, const char* argv[]) {
@@ -549,9 +552,6 @@ void deviceOffsets(int argc, const char * argv[]) {
 	}
 }
 
-
-
-
 void benchmarkIPC(int argc, const char* argv[]) {
 	if (argc > 2 && std::strcmp(argv[2], "help") == 0) {
 		std::stringstream ss;
@@ -616,4 +616,23 @@ void benchmarkIPC(int argc, const char* argv[]) {
 	}
 	std::cout << "IPC request size: " << sizeof(vrinputemulator::ipc::Request) << " bytes" << std::endl;
 	std::cout << "IPC reply size: " << sizeof(vrinputemulator::ipc::Reply) << " bytes" << std::endl;
+}
+
+BOOST_PYTHON_MODULE(client_commandline)
+{
+	boost::python::def("list_devices", listDevices);
+	boost::python::def("button_event", buttonEvent);
+	boost::python::def("axis_event", axisEvent);
+	boost::python::def("proximity_sensor_event", proximitySensorEvent);
+	boost::python::def("list_virtual", listVirtual);
+	boost::python::def("add_tracked_controller", addTrackedController);
+	boost::python::def("publish_tracked_device", publishTrackedDevice);
+	boost::python::def("set_device_property", setDeviceProperty);
+	boost::python::def("get_device_property", getDeviceProperty);
+	boost::python::def("remove_device_property", removeDeviceProperty);
+	boost::python::def("set_device_connection", setDeviceConnection);
+	boost::python::def("set_device_position", setDevicePosition);
+	boost::python::def("set_device_rotation", setDeviceRotation);
+	boost::python::def("device_offsets", deviceOffsets);
+	boost::python::def("benchmarkIPC", benchmarkIPC);
 }
